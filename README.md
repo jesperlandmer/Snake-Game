@@ -1,2 +1,2 @@
-# Snake-Game-C-
-A TDD project featuring the game Snake in C#
+# Snake Game C#
+An MVC TDD project featuring the game Snake in C#
