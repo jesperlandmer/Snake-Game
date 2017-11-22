@@ -5,7 +5,7 @@ namespace Snake_Game.Tests
 {
     [TestFixture]
     [Category("Model")]
-    class PositionUnitTest
+    class PositionTest
     {
         [TestCase(10, 8)]
         public void AssertPositionReturnsCoordinates(int x, int y)
