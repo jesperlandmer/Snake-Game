@@ -1,7 +1,7 @@
 
 using System;
 
-namespace Snake_Game.Src
+namespace Snake_Game.Src.Model
 {
     public class Position
     {
@@ -23,7 +23,7 @@ namespace Snake_Game.Src
             {
                 if (value < 0)
                 {
-                    throw new ArgumentOutOfRangeException();
+                    throw new ArgumentOutOfRangeException(nameof(value));
                 }
 
                 _x = value;
@@ -39,7 +39,7 @@ namespace Snake_Game.Src
             {
                 if (value < 0)
                 {
-                    throw new ArgumentOutOfRangeException();
+                    throw new ArgumentOutOfRangeException(nameof(value));
                 }
 
                 _y = value;
