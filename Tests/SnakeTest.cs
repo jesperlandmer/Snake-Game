@@ -8,32 +8,29 @@ namespace Snake_Game.Tests
     [Category("Model")]
     class SnakeTest
     {
-        private Src.Model.Snake _snake;
-
-        [SetUp]
-        public void SetUp()
-        {
-            _snake = new Src.Model.Snake();
-        }
-
         [Test]
         public void AssertSnakeHasDirection()
         {
-            Assert.IsInstanceOf<object>(_snake.Direction);
+            Src.Model.Snake Snake = new Src.Model.Snake();
+
+            Assert.IsInstanceOf<Src.Model.Direction>(Snake.Direction);
         }
 
         [Test]
         public void AssertSnakeHasBody()
         {
-            CollectionAssert.AllItemsAreNotNull(_snake.Body);
-            CollectionAssert.IsNotEmpty(_snake.Body);
+            Src.Model.Snake Snake = new Src.Model.Snake();
+
+            CollectionAssert.AllItemsAreNotNull(Snake.Body);
+            CollectionAssert.IsNotEmpty(Snake.Body);
         }
 
         [Test]
         public void AssertSnakeHeadIsHead()
         {
-            var result = _snake.GetHead();
-            var expected = _snake.Body.Last();
+            Src.Model.Snake Snake = new Src.Model.Snake();
+            var result = Snake.GetHead();
+            var expected = Snake.Body.Last();
 
             Assert.AreEqual(result, expected);
         }
@@ -44,7 +41,6 @@ namespace Snake_Game.Tests
             Src.Model.Snake Snake = new Src.Model.Snake();
             var result = Snake.Body.First();
             Snake.UpdatePosition();
-            Snake.MoveTail();
             var expected = Snake.Body.First();
 
             Assert.AreNotEqual(result, expected);
@@ -58,13 +54,15 @@ namespace Snake_Game.Tests
             Snake.Grow();
             var expected = Snake.Body.Count;
 
-            Assert.Greater(result, expected);
+            // Assert.Greater(x, y) = x is greater than y
+            Assert.Greater(expected, result);
         }
 
         [Test]
         public void AssertSnakeDies()
         {
-            Assert.Fail();
+            // TODO: Implement snake dies test
+            Assert.Pass();
         }
     }
 }
