@@ -5,6 +5,7 @@ namespace Snake_Game.Src.Model
 {
     public class Food
     {
+        private Random _random = new Random();
         public Position FoodPosition { get; private set; }
         public Food(int WidthLimit, int HeightLimit)
         {
@@ -13,13 +14,13 @@ namespace Snake_Game.Src.Model
 
         private Position GenerateRandomPosition(int x, int y)
         {
-            Random random = new Random();
-            if (x < 1 || y < 1)
+            int minLimit = 1;
+            if (x < minLimit || y < minLimit)
             {
                 throw new ArgumentOutOfRangeException();
             }
 
-            return new Position(random.Next(1, x), random.Next(1, y));
+            return new Position(_random.Next(minLimit, x), _random.Next(minLimit, y));
         }
     }
 }
