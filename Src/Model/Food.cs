@@ -8,12 +8,18 @@ namespace Snake_Game.Src.Model
         public Position FoodPosition { get; private set; }
         public Food(int WidthLimit, int HeightLimit)
         {
-
+            FoodPosition = GenerateRandomPosition(WidthLimit, HeightLimit);
         }
 
-        private Position GetRandomPosition(int x, int y)
+        private Position GenerateRandomPosition(int x, int y)
         {
-            throw new NotImplementedException();
+            Random random = new Random();
+            if (x < 1 || y < 1)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            return new Position(random.Next(1, x), random.Next(1, y));
         }
     }
 }
