@@ -9,7 +9,8 @@ namespace Snake_Game.Src
         private int _y;
         public Position(int x, int y)
         {
-
+            XCoordinate = x;
+            YCoordinate = y;
         }
 
         public int XCoordinate
@@ -20,7 +21,12 @@ namespace Snake_Game.Src
             }
             set
             {
-                throw new NotImplementedException();
+                if (value < 0)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+
+                _x = value;
             }
         }
         public int YCoordinate
@@ -31,7 +37,12 @@ namespace Snake_Game.Src
             }
             set
             {
-                throw new NotImplementedException();
+                if (value < 0)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+
+                _y = value;
             }
         }
     }
