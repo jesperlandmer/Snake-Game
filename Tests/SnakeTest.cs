@@ -8,10 +8,13 @@ namespace Snake_Game.Tests
     [Category("Model")]
     class SnakeTest
     {
-        private Src.Model.Snake _sut;
-        [SetUp] public void Init()
+        private SnakeStub _sut;
+
+        [SetUp]
+        public void Init()
         {
-            _sut = new Src.Model.Snake();
+            _sut = new SnakeStub(new RulesFactoryStub());
+            _sut.NewGame();
         }
 
         [Test]
@@ -60,8 +63,29 @@ namespace Snake_Game.Tests
         [Test]
         public void AssertSnakeDies()
         {
-            // TODO: Implement snake dies test
-            Assert.Pass();
+            Assert.True(_sut.Dead());
+        }
+    }
+
+    class SnakeStub : Src.Model.Snake
+    {
+        public SnakeStub(Src.Model.rules.IRulesFactory rulesStub) : base(rulesStub)
+        {
+            _rules = rulesStub.GetGameRules();
+        }
+    }
+    class RulesFactoryStub : Src.Model.rules.RulesFactory, Src.Model.rules.IRulesFactory
+    {
+        public new Src.Model.rules.ISnakeRules GetGameRules()
+        {
+            return new SnakeRulesStub();
+        }
+    }
+    class SnakeRulesStub : Src.Model.rules.ISnakeRules
+    {
+        public bool IsGameOver(Src.Model.Snake s)
+        {
+            return true;
         }
     }
 }

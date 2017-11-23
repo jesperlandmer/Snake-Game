@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Snake_Game.Src.Model.rules
 {
-    public class SnakeGameStrategy
+    public class SnakeGameStrategy : ISnakeGameStrategy
     {
         private int _initLength = 5;
         private int _initXCoordinate = 10;
