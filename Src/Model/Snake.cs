@@ -12,16 +12,22 @@ namespace Snake_Game.Src.Model
         Right,
         Left
     }
-    public class Snake
+    class Snake
     {
-        private rules.SnakeGameStrategy _setup = new rules.SnakeGameStrategy();
+        protected rules.ISnakeGameStrategy _setup;
+        protected rules.ISnakeRules _rules;
         public List<Position> Body { get; private set; }
         public Direction Direction { get; set; }
-        public Snake()
+        public Snake(rules.IRulesFactory rules)
+        {
+            _setup = rules.GetInitSnake();
+            _rules = rules.GetGameRules();
+        }
+
+        public void NewGame()
         {
             Body = _setup.GetInitSnake();
         }
-
         public Position GetHead()
         {
             return Body.Last();
