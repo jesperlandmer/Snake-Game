@@ -76,7 +76,7 @@ namespace Snake_Game.Src.Model
         }
         public bool Dead()
         {
-            throw new NotImplementedException();
+            return _rules.IsGameOver(this);
         }
     }
 }
