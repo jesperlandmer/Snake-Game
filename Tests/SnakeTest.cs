@@ -8,12 +8,12 @@ namespace Snake_Game.Tests
     [Category("Model")]
     class SnakeTest
     {
-        private SnakeStub _sut;
+        private Src.Model.Snake _sut;
 
         [SetUp]
         public void Init()
         {
-            _sut = new SnakeStub(new RulesFactoryStub());
+            _sut = new Src.Model.Snake(new RulesFactoryStub());
             _sut.NewGame();
         }
 
@@ -61,19 +61,12 @@ namespace Snake_Game.Tests
         }
 
         [Test]
-        public void AssertSnakeDies()
+        public void AssertSnakeCanDie()
         {
             Assert.True(_sut.Dead());
         }
     }
 
-    class SnakeStub : Src.Model.Snake
-    {
-        public SnakeStub(Src.Model.rules.IRulesFactory rulesStub) : base(rulesStub)
-        {
-            _rules = rulesStub.GetGameRules();
-        }
-    }
     class RulesFactoryStub : Src.Model.rules.RulesFactory, Src.Model.rules.IRulesFactory
     {
         public new Src.Model.rules.ISnakeRules GetGameRules()
