@@ -8,29 +8,30 @@ namespace Snake_Game.Tests
     [Category("Model")]
     class SnakeTest
     {
+        private Src.Model.Snake _sut;
+        [SetUp] public void Init()
+        {
+            _sut = new Src.Model.Snake();
+        }
+
         [Test]
         public void AssertSnakeHasDirection()
         {
-            Src.Model.Snake Snake = new Src.Model.Snake();
-
-            Assert.IsInstanceOf<Src.Model.Direction>(Snake.Direction);
+            Assert.IsInstanceOf<Src.Model.Direction>(_sut.Direction);
         }
 
         [Test]
         public void AssertSnakeHasBody()
         {
-            Src.Model.Snake Snake = new Src.Model.Snake();
-
-            CollectionAssert.AllItemsAreNotNull(Snake.Body);
-            CollectionAssert.IsNotEmpty(Snake.Body);
+            CollectionAssert.AllItemsAreNotNull(_sut.Body);
+            CollectionAssert.IsNotEmpty(_sut.Body);
         }
 
         [Test]
         public void AssertSnakeHeadIsHead()
         {
-            Src.Model.Snake Snake = new Src.Model.Snake();
-            var result = Snake.GetHead();
-            var expected = Snake.Body.Last();
+            var result = _sut.GetHead();
+            var expected = _sut.Body.Last();
 
             Assert.AreEqual(result, expected);
         }
@@ -38,10 +39,9 @@ namespace Snake_Game.Tests
         [Test]
         public void AssertSnakeMoves()
         {
-            Src.Model.Snake Snake = new Src.Model.Snake();
-            var result = Snake.Body.First();
-            Snake.UpdatePosition();
-            var expected = Snake.Body.First();
+            var result = _sut.Body.First();
+            _sut.UpdatePosition();
+            var expected = _sut.Body.First();
 
             Assert.AreNotEqual(result, expected);
         }
@@ -49,10 +49,9 @@ namespace Snake_Game.Tests
         [Test]
         public void AssertSnakeGrows()
         {
-            Src.Model.Snake Snake = new Src.Model.Snake();
-            var result = Snake.Body.Count;
-            Snake.Grow();
-            var expected = Snake.Body.Count;
+            var result = _sut.Body.Count;
+            _sut.Grow();
+            var expected = _sut.Body.Count;
 
             // Assert.Greater(x, y) = x is greater than y
             Assert.Greater(expected, result);

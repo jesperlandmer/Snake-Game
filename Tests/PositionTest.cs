@@ -7,13 +7,14 @@ namespace Snake_Game.Tests
     [Category("Model")]
     class PositionTest
     {
+
         [TestCase(10, 8)]
         public void AssertPositionReturnsCoordinates(int x, int y)
         {
-            Src.Model.Position p = new Src.Model.Position(x, y);
+            Src.Model.Position sut = new Src.Model.Position(x, y);
 
-            Assert.AreEqual(p.XCoordinate, x);
-            Assert.AreEqual(p.YCoordinate, y);
+            Assert.AreEqual(sut.XCoordinate, x);
+            Assert.AreEqual(sut.YCoordinate, y);
         }
 
         [TestCase(-6, -3)]

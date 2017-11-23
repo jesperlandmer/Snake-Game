@@ -10,9 +10,9 @@ namespace Snake_Game.Tests
         [TestCase(20, 20)]
         public void AssertFoodHasPosition(int WidthLimit, int HeightLimit)
         {
-            Src.Model.Food f = new Src.Model.Food(WidthLimit, HeightLimit);
+            Src.Model.Food sut = new Src.Model.Food(WidthLimit, HeightLimit);
 
-            Assert.IsInstanceOf<Src.Model.Position>(f.FoodPosition);
+            Assert.IsInstanceOf<Src.Model.Position>(sut.FoodPosition);
         }
 
         [TestCase(-20, 20)]
