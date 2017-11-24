@@ -7,6 +7,10 @@ namespace Snake_Game.Src.Model.rules
     {
         private int _squareArenaLimit = 30;
 
+        public int GetArenaLimit()
+        {
+            return _squareArenaLimit;
+        }
         public bool IsGameOver(Snake m_snake)
         {
             if (HitHeightLimits(m_snake.GetHead()) || HitLengthLimits(m_snake.GetHead()))
