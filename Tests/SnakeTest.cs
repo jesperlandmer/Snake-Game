@@ -65,8 +65,29 @@ namespace Snake_Game.Tests
         {
             Assert.True(_sut.Dead());
         }
-    }
 
+        [TestCase(0, 10)]
+        [TestCase(10, 0)]
+        public void AssertSnakeDiesFromHittingWall(int x, int y)
+        {
+            SnakeStub snakeStub = new SnakeStub(new Src.Model.rules.RulesFactory());
+            snakeStub.NewGame();
+            snakeStub.SetHead(x, y);
+
+            Assert.True(snakeStub.Dead());
+        }
+    }
+    class SnakeStub : Src.Model.Snake
+    {
+        public SnakeStub(Src.Model.rules.IRulesFactory r_rules) : base(r_rules)
+        {
+        }
+
+        public void SetHead(int x, int y)
+        {
+            Body.Add(new Src.Model.Position(x, y));
+        }
+    }
     class RulesFactoryStub : Src.Model.rules.RulesFactory, Src.Model.rules.IRulesFactory
     {
         public new Src.Model.rules.ISnakeRules GetGameRules()
@@ -74,9 +95,9 @@ namespace Snake_Game.Tests
             return new SnakeRulesStub();
         }
     }
-    class SnakeRulesStub : Src.Model.rules.ISnakeRules
+    class SnakeRulesStub : Src.Model.rules.SnakeRules, Src.Model.rules.ISnakeRules
     {
-        public bool IsGameOver(Src.Model.Snake s)
+        public new bool IsGameOver(Src.Model.Snake s)
         {
             return true;
         }

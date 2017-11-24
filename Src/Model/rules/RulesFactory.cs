@@ -3,11 +3,11 @@ using System;
 
 namespace Snake_Game.Src.Model.rules
 {
-    class RulesFactory
+    class RulesFactory : IRulesFactory
     {
         public ISnakeRules GetGameRules()
         {
-            throw new NotImplementedException();
+            return new SnakeRules();
         }
 
         public ISnakeGameStrategy GetInitSnake()

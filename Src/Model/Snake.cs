@@ -16,12 +16,12 @@ namespace Snake_Game.Src.Model
     {
         protected rules.ISnakeGameStrategy _setup;
         protected rules.ISnakeRules _rules;
-        public List<Position> Body { get; private set; }
-        public Direction Direction { get; set; }
-        public Snake(rules.IRulesFactory rules)
+        public List<Position> Body { get; protected set; }
+        public Direction Direction { get; private set; }
+        public Snake(rules.IRulesFactory r_rules)
         {
-            _setup = rules.GetInitSnake();
-            _rules = rules.GetGameRules();
+            _setup = r_rules.GetInitSnake();
+            _rules = r_rules.GetGameRules();
         }
 
         public void NewGame()
