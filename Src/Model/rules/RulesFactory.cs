@@ -10,7 +10,7 @@ namespace Snake_Game.Src.Model.rules
             return new SnakeRules();
         }
 
-        public virtual ISnakeGameStrategy GetInitSnake()
+        public virtual ISnakeGameStrategy GetSnakeGameStrategy()
         {
             return new SnakeGameStrategy();
         }

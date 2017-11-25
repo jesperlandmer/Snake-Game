@@ -20,7 +20,7 @@ namespace Snake_Game.Src.Model
         public Direction Direction { get; private set; }
         public Snake(rules.IRulesFactory r_rules)
         {
-            _setup = r_rules.GetInitSnake();
+            _setup = r_rules.GetSnakeGameStrategy();
             _rules = r_rules.GetGameRules();
         }
 

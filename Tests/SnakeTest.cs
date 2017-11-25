@@ -22,12 +22,13 @@ namespace Snake_Game.Tests
         public void AssertSnakeIsCreated()
         {
             var mockFactory = new Mock<Src.Model.rules.IRulesFactory>();
-            mockFactory.Setup(t => t.GetInitSnake()).Returns(new Src.Model.rules.SnakeGameStrategy());
+            var mockStrategy = new Mock<Src.Model.rules.SnakeGameStrategy>();
+            mockFactory.Setup(t => t.GetSnakeGameStrategy()).Returns(mockStrategy.Object);
 
             _sut = new Src.Model.Snake(mockFactory.Object);
             _sut.NewGame();
 
-            mockFactory.Verify(f => f.GetInitSnake(), Times.Once());
+            mockStrategy.Verify(s => s.GetInitSnake(), Times.Once());
         }
 
         [Test]

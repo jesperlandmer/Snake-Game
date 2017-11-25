@@ -11,7 +11,7 @@ namespace Snake_Game.Src.Model.rules
         private int _initXCoordinate = 10;
         private int _initYCoordinate = 10;
 
-        public List<Position> GetInitSnake()
+        public virtual List<Position> GetInitSnake()
         {
             List<Position> initBody = new List<Position>();
 
