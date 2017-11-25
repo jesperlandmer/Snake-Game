@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Moq;
 using NUnit.Framework;
 
 namespace Snake_Game.Tests
@@ -15,6 +16,18 @@ namespace Snake_Game.Tests
         {
             _sut = new Src.Model.Snake(new RulesFactoryStub());
             _sut.NewGame();
+        }
+
+        [Test]
+        public void AssertSnakeIsCreated()
+        {
+            var mockFactory = new Mock<Src.Model.rules.IRulesFactory>();
+            mockFactory.Setup(t => t.GetInitSnake()).Returns(new Src.Model.rules.SnakeGameStrategy());
+
+            _sut = new Src.Model.Snake(mockFactory.Object);
+            _sut.NewGame();
+
+            mockFactory.Verify(f => f.GetInitSnake(), Times.Once());
         }
 
         [Test]
