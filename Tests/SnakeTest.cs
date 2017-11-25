@@ -19,7 +19,7 @@ namespace Snake_Game.Tests
         }
 
         [Test]
-        public void AssertSnakeIsCreated()
+        public void AssertInitialSnakeIsCreated()
         {
             var mockFactory = new Mock<Src.Model.rules.IRulesFactory>();
             var mockStrategy = new Mock<Src.Model.rules.SnakeGameStrategy>();
