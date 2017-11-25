@@ -26,7 +26,7 @@ namespace Snake_Game.Src.Model
 
         public void NewGame()
         {
-            throw new NotImplementedException();
+            Body = _setup.GetInitSnake();
         }
         public Position GetHead()
         {
