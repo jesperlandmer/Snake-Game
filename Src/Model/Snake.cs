@@ -32,7 +32,7 @@ namespace Snake_Game.Src.Model
         {
             return Body.Last();
         }
-        public void SetDirection(Direction m_dir)
+        public void UpdateDirection(Direction m_dir)
         {
             Direction = m_dir;
         }

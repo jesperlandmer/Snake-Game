@@ -12,6 +12,11 @@ namespace Snake_Game.Src.Model
             FoodPosition = GenerateRandomPosition(WidthLimit, HeightLimit);
         }
 
+        public void NewFood()
+        {
+            throw new NotImplementedException();
+        }
+
         private Position GenerateRandomPosition(int x, int y)
         {
             int minLimit = 1;
