@@ -99,6 +99,7 @@ namespace Snake_Game.Tests
 
         public void SetHead(int x, int y)
         {
+            MoveLastTail();
             Body.Add(new Src.Model.Position(x, y));
         }
     }

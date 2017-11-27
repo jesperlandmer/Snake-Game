@@ -3,29 +3,30 @@ using System;
 
 namespace Snake_Game.Src.Model
 {
-    public class Food
+    class Food
     {
+        private rules.ISnakeRules _gameRules;
         private Random _random = new Random();
-        public Position FoodPosition { get; private set; }
-        public Food(int WidthLimit, int HeightLimit)
+        public Position FoodPosition { get; protected set; }
+        public Food(rules.IRulesFactory rules)
         {
-            FoodPosition = GenerateRandomPosition(WidthLimit, HeightLimit);
+            _gameRules = rules.GetGameRules();
         }
 
-        public void NewFood()
+        public virtual void NewFood()
         {
-            throw new NotImplementedException();
+            FoodPosition = GenerateRandomPosition(_gameRules.GetArenaLimit());
         }
 
-        private Position GenerateRandomPosition(int x, int y)
+        protected Position GenerateRandomPosition(int maxLimit)
         {
             int minLimit = 1;
-            if (x < minLimit || y < minLimit)
+            if (maxLimit < minLimit)
             {
                 throw new ArgumentOutOfRangeException();
             }
-
-            return new Position(_random.Next(minLimit, x), _random.Next(minLimit, y));
+            
+            return new Position(_random.Next(minLimit, maxLimit), _random.Next(minLimit, maxLimit));
         }
     }
 }

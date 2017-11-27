@@ -14,29 +14,29 @@ namespace Snake_Game.Src.Model
     }
     class Snake
     {
-        protected rules.ISnakeGameStrategy _setup;
-        protected rules.ISnakeRules _rules;
+        protected rules.ISnakeGameStrategy _initRules;
+        protected rules.ISnakeRules _snakeRules;
         public List<Position> Body { get; protected set; }
         public Direction Direction { get; private set; }
         public Snake(rules.IRulesFactory r_rules)
         {
-            _setup = r_rules.GetSnakeGameStrategy();
-            _rules = r_rules.GetGameRules();
+            _initRules = r_rules.GetSnakeGameStrategy();
+            _snakeRules = r_rules.GetGameRules();
         }
 
-        public void NewGame()
+        public virtual void NewGame()
         {
-            Body = _setup.GetInitSnake();
+            Body = _initRules.GetInitSnake();
         }
         public Position GetHead()
         {
             return Body.Last();
         }
-        public void UpdateDirection(Direction m_dir)
+        public virtual void UpdateDirection(Direction m_dir)
         {
             Direction = m_dir;
         }
-        public void UpdatePosition()
+        public virtual void UpdatePosition()
         {
             MoveLastTail();
             SetNewPosition();
@@ -76,7 +76,7 @@ namespace Snake_Game.Src.Model
         }
         public bool Dead()
         {
-            return _rules.IsGameOver(this);
+            return _snakeRules.IsGameOver(this);
         }
     }
 }

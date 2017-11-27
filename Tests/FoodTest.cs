@@ -7,19 +7,37 @@ namespace Snake_Game.Tests
     [Category("Model")]
     class FoodTest
     {
-        [TestCase(20, 20)]
-        public void AssertFoodHasPosition(int WidthLimit, int HeightLimit)
-        {
-            Src.Model.Food sut = new Src.Model.Food(WidthLimit, HeightLimit);
+        private FoodStub _sut;
 
-            Assert.IsInstanceOf<Src.Model.Position>(sut.FoodPosition);
+        [SetUp]
+        public void Init()
+        {
+            _sut = new FoodStub();
         }
 
-        [TestCase(-20, 20)]
-        public void AssertFoodThrowsException(int WidthLimit, int HeightLimit)
+        [TestCase(20)]
+        public void AssertFoodSetsPosition(int maxLimit)
         {
-            Assert.That(() => new Src.Model.Food(WidthLimit, HeightLimit), 
+            _sut.NewFood(maxLimit);
+            Assert.IsInstanceOf<Src.Model.Position>(_sut.FoodPosition);
+        }
+
+        [TestCase(-20)]
+        public void AssertFoodThrowsException(int maxLimit)
+        {
+            Assert.That(() => _sut.NewFood(maxLimit),
             Throws.TypeOf<ArgumentOutOfRangeException>());
+        }
+    }
+
+    class FoodStub : Src.Model.Food
+    {
+        public FoodStub() : base(new Src.Model.rules.RulesFactory())
+        {
+        }
+        public void NewFood(int maxLimit)
+        {
+            FoodPosition = GenerateRandomPosition(maxLimit);
         }
     }
 }

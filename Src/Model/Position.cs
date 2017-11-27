@@ -13,6 +13,16 @@ namespace Snake_Game.Src.Model
             YCoordinate = y;
         }
 
+        public bool IsPositionEqualTo(Position Pos)
+        {
+            if (this.XCoordinate == Pos.XCoordinate &&
+                this.YCoordinate == Pos.YCoordinate)
+            {
+                return true;
+            }
+            return false;
+        }
+
         public int XCoordinate
         {
             get
