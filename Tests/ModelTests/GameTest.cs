@@ -10,15 +10,11 @@ namespace Snake_Game.Tests.ModelTests
     class GameTest
     {
         private Src.Model.Game _sut;
-        private Mock<Src.Model.Snake> _snakeMock;
-        private Src.Model.rules.IRulesFactory _rules = new Src.Model.rules.RulesFactory();
 
         [SetUp]
         public void Init()
         {
-            _snakeMock = new Mock<Src.Model.Snake>(_rules);
             _sut = new Src.Model.Game();
-
             _sut.NewGame();
         }
 
@@ -40,6 +36,7 @@ namespace Snake_Game.Tests.ModelTests
         [TestCase(Src.Model.Direction.Right)]
         public void AssertSnakeDirectionIsSet(Src.Model.Direction dir)
         {
+            var _snakeMock = new Mock<SnakeInstanceStub>();
             _sut = new GameStub(_snakeMock.Object);
             _sut.SetDirection(dir);
             _snakeMock.Verify(s => s.UpdateDirection(dir), Times.Once());
@@ -48,7 +45,7 @@ namespace Snake_Game.Tests.ModelTests
         [Test]
         public void AssertSnakeGrowsWhenFed()
         {
-            SetSnakeHeadWhereFoodIs(new SnakeStub(_rules));
+            SetSnakeHeadWhereFoodIs(new SnakeInstanceStub());
             _sut.FeedSnake();
             int result = _sut.Snake.Body.Count;
 
@@ -62,7 +59,7 @@ namespace Snake_Game.Tests.ModelTests
         [Test]
         public void AssertFoodSpawnsOnNewLocationWhenEaten()
         {
-            SetSnakeHeadWhereFoodIs(new SnakeStub(_rules));
+            SetSnakeHeadWhereFoodIs(new SnakeInstanceStub());
             Src.Model.Position expected = _sut.Food.FoodPosition;
             _sut.FeedSnake();
 
@@ -72,7 +69,7 @@ namespace Snake_Game.Tests.ModelTests
             Assert.False(expected.IsPositionEqualTo(result));
         }
 
-        private void SetSnakeHeadWhereFoodIs(SnakeStub snakeStub)
+        private void SetSnakeHeadWhereFoodIs(SnakeInstanceStub snakeStub)
         {
             _sut = new GameStub(snakeStub);
             _sut.NewGame();
@@ -85,6 +82,13 @@ namespace Snake_Game.Tests.ModelTests
         public GameStub(Src.Model.Snake snake)
         {
             Snake = snake;
+        }
+    }
+
+    class SnakeInstanceStub : SnakeStub
+    {
+        public SnakeInstanceStub() : base(new Src.Model.rules.RulesFactory())
+        {
         }
     }
 }
