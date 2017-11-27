@@ -1,7 +1,7 @@
 using System;
 using NUnit.Framework;
 
-namespace Snake_Game.Tests
+namespace Snake_Game.Tests.ModelTests
 {
     [TestFixture]
     [Category("Model")]
