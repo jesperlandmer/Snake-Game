@@ -11,15 +11,13 @@ namespace Snake_Game.Tests
     {
         private Src.Model.Game _sut;
         private Mock<Src.Model.Snake> _snakeMock;
-        private Mock<Src.Model.Food> _foodMock;
         private Src.Model.rules.IRulesFactory _rules = new Src.Model.rules.RulesFactory();
 
         [SetUp]
         public void Init()
         {
             _snakeMock = new Mock<Src.Model.Snake>(_rules);
-            _foodMock = new Mock<Src.Model.Food>(_rules);
-            _sut = new GameStub(_snakeMock.Object, _foodMock.Object);
+            _sut = new Src.Model.Game();
 
             _sut.NewGame();
         }
@@ -27,15 +25,13 @@ namespace Snake_Game.Tests
         [Test]
         public void AssertSnakeIsCreatedOnNewGame()
         {
-            _snakeMock.Verify(s => s.NewGame(), Times.Once());
-            Assert.IsNotNull(_sut.Snake);
+            Assert.IsNotNull(_sut.Snake.Body);
         }
 
         [Test]
         public void AssertFoodIsCreatedOnNewGame()
         {
-            _foodMock.Verify(s => s.NewFood(), Times.Once());
-            Assert.IsNotNull(_sut.Food);
+            Assert.IsNotNull(_sut.Food.FoodPosition);
         }
 
         [TestCase(Src.Model.Direction.Up)]
@@ -44,66 +40,51 @@ namespace Snake_Game.Tests
         [TestCase(Src.Model.Direction.Right)]
         public void AssertSnakeDirectionIsSet(Src.Model.Direction dir)
         {
+            _sut = new GameStub(_snakeMock.Object);
             _sut.SetDirection(dir);
-            _snakeMock.Verify(s => s.UpdatePosition(), Times.Once());
+            _snakeMock.Verify(s => s.UpdateDirection(dir), Times.Once());
         }
 
         [Test]
-        public void AssertSnakeGrowsWhenFed(Src.Model.Direction dir)
+        public void AssertSnakeGrowsWhenFed()
         {
-            SnakeStub snakeStub = new SnakeStub(_rules);
-            int expected = snakeStub.Body.Count + 1;
-            FeedSnakeStub(snakeStub);
+            SetSnakeHeadWhereFoodIs(new SnakeStub(_rules));
+            _sut.FeedSnake();
             int result = _sut.Snake.Body.Count;
+
+            var game = new Src.Model.Game();
+            game.NewGame();
+            int expected = game.Snake.Body.Count + 1;
 
             Assert.AreEqual(expected, result);
         }
 
         [Test]
-        public void AssertFoodRespawnsWhenEaten(Src.Model.Direction dir)
+        public void AssertFoodSpawnsOnNewLocationWhenEaten()
         {
-            _sut = new Src.Model.Game();
-            int expectedX = _sut.Food.FoodPosition.XCoordinate;
-            int expectedY = _sut.Food.FoodPosition.YCoordinate;
-            FeedSnakeStub(new SnakeStub(_rules));
-
-            int resultX = _sut.Food.FoodPosition.XCoordinate;
-            int resultY = _sut.Food.FoodPosition.YCoordinate;
-
-            Assert.AreNotEqual(expectedX, resultX);
-            Assert.AreNotEqual(expectedY, resultY);
-        }
-
-        private void FeedSnakeStub(SnakeStub snakeStub)
-        {
-            _sut = new GameStubSnakeInject(snakeStub);
-            snakeStub.SetHead(_sut.Food.FoodPosition.XCoordinate, _sut.Food.FoodPosition.YCoordinate);
+            SetSnakeHeadWhereFoodIs(new SnakeStub(_rules));
+            Src.Model.Position expected = _sut.Food.FoodPosition;
             _sut.FeedSnake();
+
+            // WARNING: This test could fail in the unlikely event that food is regenerated on same position
+            // TODO: Do test 2-4 more times if Food-position happens to be same
+            Src.Model.Position result = _sut.Food.FoodPosition;
+            Assert.False(expected.IsPositionEqualTo(result));
         }
 
-        [Test]
-        public void AssertSnakeReturnsDeadOrNot(Src.Model.Direction dir)
+        private void SetSnakeHeadWhereFoodIs(SnakeStub snakeStub)
         {
-            _sut.IsGameOver();
-            _snakeMock.Verify(s => s.Dead(), Times.Once());
+            _sut = new GameStub(snakeStub);
+            _sut.NewGame();
+            snakeStub.SetHead(_sut.Food.FoodPosition.XCoordinate, _sut.Food.FoodPosition.YCoordinate);
         }
     }
 
     class GameStub : Src.Model.Game
     {
-        public GameStub(Src.Model.Snake snake, Src.Model.Food food)
-        {
-            Snake = snake;
-            Food = food;
-        }
-    }
-
-    class GameStubSnakeInject : Src.Model.Game
-    {
-        public GameStubSnakeInject(Src.Model.Snake snake)
+        public GameStub(Src.Model.Snake snake)
         {
             Snake = snake;
         }
     }
 }
-

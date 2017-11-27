@@ -7,36 +7,46 @@ namespace Snake_Game.Src.Model
 {
     class Game
     {
+        private rules.IRulesFactory _rules = new rules.RulesFactory();
         public Snake Snake { get; protected set; }
         public Food Food { get; protected set; }
-        public int Score => 0;
+        public int Score { get; protected set; }
         public Game()
         {
+            Snake = new Snake(_rules);
+            Food = new Food(_rules);
         }
 
-        public void NewGame()
+        public virtual void NewGame()
         {
-            throw new NotImplementedException();
+            Snake.NewGame();
+            Food.NewFood();
+            Score = 0;
         }
-        public void SetDirection(Direction dir)
+        public void SetDirection(Direction m_dir)
         {
-            throw new NotImplementedException();
+            Snake.UpdateDirection(m_dir);
         }
         public void UpdateSnake()
         {
-            throw new NotImplementedException();
+            Snake.UpdatePosition();
         }
         public void FeedSnake()
         {
-            throw new NotImplementedException();
+            if (IsSnakeFed())
+            {
+                Food.NewFood();
+                Snake.Grow();
+                Score++;
+            }
         }
-        public void UpdateFood()
+        private bool IsSnakeFed()
         {
-            throw new NotImplementedException();
+            return Snake.GetHead().IsPositionEqualTo(Food.FoodPosition);
         }
         public bool IsGameOver()
         {
-            throw new NotImplementedException();
+            return Snake.Dead();
         }
     }
 }
