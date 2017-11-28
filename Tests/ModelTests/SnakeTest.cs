@@ -21,6 +21,12 @@ namespace Snake_Game.Tests.ModelTests
         [Test]
         public void AssertInitialSnakeIsCreated()
         {
+            Assert.True(_sut.Body.Count > 0);
+        }
+
+        [Test]
+        public void AssertInitialSnakeIsCreatedFromRule()
+        {
             var mockFactory = new Mock<Src.Model.rules.IRulesFactory>();
             var mockStrategy = new Mock<Src.Model.rules.SnakeGameStrategy>();
             mockFactory.Setup(t => t.GetSnakeGameStrategy()).Returns(mockStrategy.Object);

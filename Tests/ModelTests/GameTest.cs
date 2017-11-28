@@ -36,10 +36,8 @@ namespace Snake_Game.Tests.ModelTests
         [TestCase(Src.Model.Direction.Right)]
         public void AssertSnakeDirectionIsSet(Src.Model.Direction dir)
         {
-            var _snakeMock = new Mock<SnakeInstanceStub>();
-            _sut = new GameStub(_snakeMock.Object);
             _sut.SetDirection(dir);
-            _snakeMock.Verify(s => s.UpdateDirection(dir), Times.Once());
+            Assert.True(_sut.Snake.Direction == dir);
         }
 
         [Test]
