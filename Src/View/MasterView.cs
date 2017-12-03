@@ -16,20 +16,20 @@ namespace Snake_Game.Src.View
         }
         public void WriteTop(int lim)
         {
-            for (int x = 0; x < lim; x++)
+            for (int columnIndex = 0; columnIndex < lim; columnIndex++)
             {
-                Console.SetCursorPosition(x, 0);
+                Console.SetCursorPosition(columnIndex, 0);
                 System.Console.Write("#");
             }
         }
         public void WriteSides(int lim)
         {
-            for (int y = 1; y < lim - 1; y++)
+            for (int rowIndex = 1; rowIndex < lim - 1; rowIndex++)
             {
-                Console.SetCursorPosition(0, y);
+                Console.SetCursorPosition(0, rowIndex);
                 Console.Out.Write("#");
 
-                Console.SetCursorPosition(lim - 1, y);
+                Console.SetCursorPosition(lim - 1, rowIndex);
                 Console.Out.Write("#");
             }
         }
