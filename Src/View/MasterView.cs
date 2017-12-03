@@ -7,25 +7,48 @@ namespace Snake_Game.Src.View
     {
         public ConsoleKey GetChosenDirection(IConsoleView v_console)
         {
-            throw new NotImplementedException();
+            return v_console.GetPressedArrow();
         }
 
         public void WriteArena(int m_limit)
         {
-            throw new NotImplementedException();
+            WriteTop(m_limit);
         }
         public void WriteTop(int lim)
         {
-            throw new NotImplementedException();
+            for (int x = 0; x < lim; x++)
+            {
+                Console.SetCursorPosition(x, 0);
+                System.Console.Write("#");
+            }
         }
         public void WriteSides(int lim)
         {
-            throw new NotImplementedException();
+            for (int y = 1; y < lim - 1; y++)
+            {
+                Console.SetCursorPosition(0, y);
+                Console.Out.Write("#");
+
+                Console.SetCursorPosition(lim - 1, y);
+                Console.Out.Write("#");
+            }
         }
 
         public void WriteSnake(Model.Snake m_snake)
         {
-            throw new NotImplementedException();
+            foreach (Model.Position p in m_snake.Body)
+            {
+                Console.SetCursorPosition(p.XCoordinate, p.YCoordinate);
+
+                if (p != m_snake.GetHead())
+                {
+                    Console.Out.Write("*");
+                }
+                else
+                {
+                    Console.Out.Write("⊙");
+                }
+            }
         }
         public void WriteFood(Model.Food m_food)
         {

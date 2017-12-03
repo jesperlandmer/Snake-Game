@@ -7,7 +7,7 @@ namespace Snake_Game.Src.View
     {
         public ConsoleKey GetPressedArrow()
         {
-            throw new NotImplementedException();
+            return Console.ReadKey(false).Key;
         }
     }
 }
