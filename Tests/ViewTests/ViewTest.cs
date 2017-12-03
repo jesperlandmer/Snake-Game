@@ -38,7 +38,8 @@ namespace Snake_Game.Tests.ViewTests
             mockUserInput.Setup(s => s.GetPressedArrow()).Returns(key);
             _sut.GetChosenDirection(mockUserInput.Object);
 
-            mockUserInput.Verify(s => s.GetPressedArrow(), Times.Once());
+            mockUserInput.Verify(s => s.GetPressedArrow(), 
+            Times.Once());
         }
 
         [TestCase(30)]
@@ -46,7 +47,8 @@ namespace Snake_Game.Tests.ViewTests
         {
             _sut.WriteTop(arenaLimits);
             int expected = arenaLimits;
-            _mockOutput.Verify(ms => ms.Write(It.Is<string>(Out => Out == "#")), Times.Exactly(expected));
+            _mockOutput.Verify(mo => mo.Write(It.Is<string>(Out => Out == "#")), 
+            Times.Exactly(expected));
         }
 
         [TestCase(20)]
@@ -54,21 +56,50 @@ namespace Snake_Game.Tests.ViewTests
         {
             _sut.WriteSides(arenaLimits);
             int expected = arenaLimits * 2 - 4; // minus 4 because removes corners
-            _mockOutput.Verify(ms => ms.Write(It.Is<string>(Out => Out == "#")), Times.Exactly(expected));
+            _mockOutput.Verify(mo => mo.Write(It.Is<string>(Out => Out == "#")), 
+            Times.Exactly(expected));
         }
 
-        [TestCase(20)]
-        public void AssertViewWritesSnake(int arenaLimits)
+        [Test]
+        public void AssertViewWritesSnake()
         {
             var Game = new Src.Model.Game();
             Game.NewGame();
 
             _sut.WriteSnake(Game.Snake);
-            int expectedBody = 4;
             int expectedHead = 1;
+            int expectedBody = Game.Snake.Body.Count - expectedHead;
 
-            _mockOutput.Verify(ms => ms.Write(It.Is<string>(Out => Out == "*")), Times.Exactly(expectedBody));
-            _mockOutput.Verify(ms => ms.Write(It.Is<string>(Out => Out == "⊙")), Times.Exactly(expectedHead));
+            _mockOutput.Verify(mo => mo.Write(It.Is<string>(Out => Out == "⊙")), 
+            Times.Exactly(expectedHead));
+            _mockOutput.Verify(mo => mo.Write(It.Is<string>(Out => Out == "*")), 
+            Times.Exactly(expectedBody));
+        }
+
+        [Test]
+        public void AssertViewWritesFood()
+        {
+            var Game = new Src.Model.Game();
+            Game.NewGame();
+
+            _sut.WriteFood(Game.Food);
+            int expected = 1;
+
+            _mockOutput.Verify(mo => mo.Write(It.Is<string>(Out => Out == "◕")), 
+            Times.Exactly(expected));
+        }
+
+        [TestCase(2)]
+        public void AssertViewWritesGameOver(int score)
+        {
+            _sut.WriteGameOver(score);
+
+            _mockOutput.Verify(mo => mo.Write(It.Is<string>(Out => Out == " ")), 
+            Times.Once());
+            _mockOutput.Verify(mo => mo.Write(It.Is<string>(Out => Out == "\nGame Over\n")), 
+            Times.Once());
+            _mockOutput.Verify(mo => mo.Write(It.Is<string>(Out => Out == "Score: " + score + " p")), 
+            Times.Once());
         }
     }
 }

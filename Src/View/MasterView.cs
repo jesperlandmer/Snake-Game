@@ -27,10 +27,10 @@ namespace Snake_Game.Src.View
             for (int rowIndex = 1; rowIndex < lim - 1; rowIndex++)
             {
                 Console.SetCursorPosition(0, rowIndex);
-                Console.Out.Write("#");
+                System.Console.Write("#");
 
                 Console.SetCursorPosition(lim - 1, rowIndex);
-                Console.Out.Write("#");
+                System.Console.Write("#");
             }
         }
 
@@ -42,11 +42,11 @@ namespace Snake_Game.Src.View
 
                 if (p != m_snake.GetHead())
                 {
-                    Console.Out.Write("*");
+                    System.Console.Write("*");
                 }
                 else
                 {
-                    Console.Out.Write("⊙");
+                    System.Console.Write("⊙");
                 }
             }
         }
