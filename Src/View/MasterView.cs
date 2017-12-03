@@ -52,11 +52,16 @@ namespace Snake_Game.Src.View
         }
         public void WriteFood(Model.Food m_food)
         {
-            throw new NotImplementedException();
+            Model.Position p = m_food.FoodPosition;
+
+            Console.SetCursorPosition(p.XCoordinate, p.YCoordinate);
+            System.Console.Write("◕");
         }
         public void WriteGameOver(int m_score)
         {
-            throw new NotImplementedException();
+            System.Console.Write(" ");
+            System.Console.Write("\nGame Over\n");
+            System.Console.Write("Score: {0} p", m_score);
         }
     }
 }
