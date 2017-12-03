@@ -36,9 +36,11 @@ namespace Snake_Game.Tests.ViewTests
         {
             var mockUserInput = new Mock<Src.View.IConsoleView>();
             mockUserInput.Setup(s => s.GetPressedArrow()).Returns(key);
-            _sut.GetChosenDirection(mockUserInput.Object);
 
-            mockUserInput.Verify(s => s.GetPressedArrow(), 
+            _sut = new Src.View.MasterView(mockUserInput.Object);
+            _sut.GetChosenDirection();
+
+            mockUserInput.Verify(s => s.GetPressedArrow(),
             Times.Once());
         }
 
@@ -47,7 +49,7 @@ namespace Snake_Game.Tests.ViewTests
         {
             _sut.WriteTop(arenaLimits);
             int expected = arenaLimits;
-            _mockOutput.Verify(mo => mo.Write(It.Is<string>(Out => Out == "#")), 
+            _mockOutput.Verify(mo => mo.Write(It.Is<string>(Out => Out == "#")),
             Times.Exactly(expected));
         }
 
@@ -56,7 +58,7 @@ namespace Snake_Game.Tests.ViewTests
         {
             _sut.WriteSides(arenaLimits);
             int expected = arenaLimits * 2 - 4; // minus 4 because removes corners
-            _mockOutput.Verify(mo => mo.Write(It.Is<string>(Out => Out == "#")), 
+            _mockOutput.Verify(mo => mo.Write(It.Is<string>(Out => Out == "#")),
             Times.Exactly(expected));
         }
 
@@ -70,9 +72,9 @@ namespace Snake_Game.Tests.ViewTests
             int expectedHead = 1;
             int expectedBody = Game.Snake.Body.Count - expectedHead;
 
-            _mockOutput.Verify(mo => mo.Write(It.Is<string>(Out => Out == "⊙")), 
+            _mockOutput.Verify(mo => mo.Write(It.Is<string>(Out => Out == "⊙")),
             Times.Exactly(expectedHead));
-            _mockOutput.Verify(mo => mo.Write(It.Is<string>(Out => Out == "*")), 
+            _mockOutput.Verify(mo => mo.Write(It.Is<string>(Out => Out == "*")),
             Times.Exactly(expectedBody));
         }
 
@@ -85,7 +87,7 @@ namespace Snake_Game.Tests.ViewTests
             _sut.WriteFood(Game.Food);
             int expected = 1;
 
-            _mockOutput.Verify(mo => mo.Write(It.Is<string>(Out => Out == "◕")), 
+            _mockOutput.Verify(mo => mo.Write(It.Is<string>(Out => Out == "◕")),
             Times.Exactly(expected));
         }
 
@@ -94,11 +96,11 @@ namespace Snake_Game.Tests.ViewTests
         {
             _sut.WriteGameOver(score);
 
-            _mockOutput.Verify(mo => mo.Write(It.Is<string>(Out => Out == " ")), 
+            _mockOutput.Verify(mo => mo.Write(It.Is<string>(Out => Out == " ")),
             Times.Once());
-            _mockOutput.Verify(mo => mo.Write(It.Is<string>(Out => Out == "\nGame Over\n")), 
+            _mockOutput.Verify(mo => mo.Write(It.Is<string>(Out => Out == "\nGame Over\n")),
             Times.Once());
-            _mockOutput.Verify(mo => mo.Write(It.Is<string>(Out => Out == "Score: " + score + " p")), 
+            _mockOutput.Verify(mo => mo.Write(It.Is<string>(Out => Out == "Score: " + score + " p")),
             Times.Once());
         }
     }

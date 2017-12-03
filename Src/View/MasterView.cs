@@ -5,9 +5,20 @@ namespace Snake_Game.Src.View
 {
     class MasterView
     {
-        public ConsoleKey GetChosenDirection(IConsoleView v_console)
+        private IConsoleView _console;
+
+        public MasterView()
         {
-            return v_console.GetPressedArrow();
+            _console = new ConsoleView();
+        }
+        public MasterView(IConsoleView v_console)
+        {
+            _console = v_console;
+        }
+
+        public ConsoleKey GetChosenDirection()
+        {
+            return _console.GetPressedArrow();
         }
 
         public void WriteArena(int m_limit)
