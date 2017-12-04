@@ -6,12 +6,12 @@ namespace Snake_Game.Src.Model.rules
     class SnakeRules : ISnakeRules
     {
         private int _gameSpeedLimit = 250;
-        private int _gameSpeedIncrease;
+        private int _gameSpeedIncrease = 10;
         private int _squareArenaLimit = 30;
 
         public int GetSpeedLimit()
         {
-            throw new NotImplementedException();
+            return _gameSpeedLimit;
         }
         public int GetSpeedIncrease()
         {
