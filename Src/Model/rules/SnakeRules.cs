@@ -5,8 +5,13 @@ namespace Snake_Game.Src.Model.rules
 {
     class SnakeRules : ISnakeRules
     {
+        private int _gameSpeedLimit;
         private int _squareArenaLimit = 30;
 
+        public int GetSpeedLimit()
+        {
+            throw new NotImplementedException();
+        }
         public int GetArenaLimit()
         {
             return _squareArenaLimit;

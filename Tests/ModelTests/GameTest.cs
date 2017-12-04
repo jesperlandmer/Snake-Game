@@ -30,6 +30,15 @@ namespace Snake_Game.Tests.ModelTests
 
 
         [Test]
+        public void AssertGetGameSpeedReturnsSpeed()
+        {
+            var RulesFactory = new Src.Model.rules.RulesFactory();
+            int expected = RulesFactory.GetGameRules().GetSpeedLimit();
+            int result = _sut.GetGameSpeed();
+
+            Assert.AreEqual(expected, result);
+        }
+        [Test]
         public void AssertGetArenaLimitsReturnLimits()
         {
             var RulesFactory = new Src.Model.rules.RulesFactory();

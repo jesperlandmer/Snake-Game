@@ -11,6 +11,8 @@ namespace Snake_Game.Src.Model
         public Snake Snake { get; protected set; }
         public Food Food { get; protected set; }
         public int Score { get; protected set; }
+        public int Speed{ get; protected set; }
+        
         public Game()
         {
             Snake = new Snake(_rules);
@@ -22,6 +24,10 @@ namespace Snake_Game.Src.Model
             Snake.NewGame();
             Food.NewFood();
             Score = 0;
+        }
+        public int GetGameSpeed()
+        {
+            throw new NotImplementedException();
         }
         public int GetArenaLimits()
         {
