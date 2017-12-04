@@ -102,7 +102,7 @@ namespace Snake_Game.Tests.ViewTests
         {
             _sut.WriteStats(score);
 
-            _mockOutput.Verify(mo => mo.Write(It.Is<string>(Out => Out == "Score: " + score + " p")),
+            _mockOutput.Verify(mo => mo.Write(It.Is<string>(Out => Out == "\nScore: " + score + " p")),
             Times.Once());
         }
         [Test]

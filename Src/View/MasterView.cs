@@ -80,7 +80,7 @@ namespace Snake_Game.Src.View
         }
         public void WriteStats(int m_score)
         {
-            throw new NotImplementedException();
+            System.Console.Write("\nScore: {0} p", m_score);
         }
         public void WriteGameOver()
         {
