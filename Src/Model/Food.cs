@@ -13,7 +13,7 @@ namespace Snake_Game.Src.Model
             _gameRules = rules.GetGameRules();
         }
 
-        public virtual void NewFood()
+        public void NewFood()
         {
             FoodPosition = GenerateRandomPosition(_gameRules.GetArenaLimit());
         }

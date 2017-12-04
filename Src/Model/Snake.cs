@@ -24,7 +24,7 @@ namespace Snake_Game.Src.Model
             _snakeRules = r_rules.GetGameRules();
         }
 
-        public virtual void NewGame()
+        public void NewGame()
         {
             Body = _initRules.GetInitSnake();
         }
@@ -32,11 +32,11 @@ namespace Snake_Game.Src.Model
         {
             return Body.Last();
         }
-        public virtual void UpdateDirection(Direction m_dir)
+        public void UpdateDirection(Direction m_dir)
         {
             Direction = m_dir;
         }
-        public virtual void UpdatePosition()
+        public void UpdatePosition()
         {
             MoveLastTail();
             SetNewPosition();
