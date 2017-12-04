@@ -7,12 +7,10 @@ namespace Snake_Game.Tests.ModelTests
 {
     [TestFixture]
     [Category("Model")]
-    class SnakeTest
+    class SnakeTest : TestBase<Src.Model.Snake>
     {
-        private Src.Model.Snake _sut;
-
         [SetUp]
-        public void Init()
+        public override void Init()
         {
             _sut = new Src.Model.Snake(new RulesFactoryStub());
             _sut.NewGame();
@@ -96,31 +94,32 @@ namespace Snake_Game.Tests.ModelTests
 
             Assert.True(snakeStub.Dead());
         }
-    }
-    class SnakeStub : Src.Model.Snake
-    {
-        public SnakeStub(Src.Model.rules.IRulesFactory r_rules) : base(r_rules)
-        {
-        }
 
-        public void SetHead(int x, int y)
+        internal class SnakeStub : Src.Model.Snake
         {
-            MoveLastTail();
-            Body.Add(new Src.Model.Position(x, y));
+            public SnakeStub(Src.Model.rules.IRulesFactory r_rules) : base(r_rules)
+            {
+            }
+
+            public void SetHead(int x, int y)
+            {
+                MoveLastTail();
+                Body.Add(new Src.Model.Position(x, y));
+            }
         }
-    }
-    class RulesFactoryStub : Src.Model.rules.RulesFactory, Src.Model.rules.IRulesFactory
-    {
-        public new Src.Model.rules.ISnakeRules GetGameRules()
+        internal class RulesFactoryStub : Src.Model.rules.RulesFactory, Src.Model.rules.IRulesFactory
         {
-            return new SnakeRulesStub();
+            public new Src.Model.rules.ISnakeRules GetGameRules()
+            {
+                return new SnakeRulesStub();
+            }
         }
-    }
-    class SnakeRulesStub : Src.Model.rules.SnakeRules, Src.Model.rules.ISnakeRules
-    {
-        public new bool IsGameOver(Src.Model.Snake s)
+        internal class SnakeRulesStub : Src.Model.rules.SnakeRules, Src.Model.rules.ISnakeRules
         {
-            return true;
+            public new bool IsGameOver(Src.Model.Snake s)
+            {
+                return true;
+            }
         }
     }
 }

@@ -5,39 +5,46 @@ namespace Snake_Game.Tests.ModelTests
 {
     [TestFixture]
     [Category("Model")]
-    class FoodTest
+    class FoodTest : TestBase<Src.Model.Food>
     {
-        private FoodStub _sut;
-
         [SetUp]
-        public void Init()
+        public override void Init()
         {
-            _sut = new FoodStub();
+            var RulesFactory = new Src.Model.rules.RulesFactory();
+            _sut = new Src.Model.Food(RulesFactory);
         }
 
         [TestCase(20)]
         public void AssertFoodSetsPosition(int maxLimit)
         {
-            _sut.NewFood(maxLimit);
+            _sut.NewFood();
             Assert.IsInstanceOf<Src.Model.Position>(_sut.FoodPosition);
+            Assert.IsNotNull(_sut.FoodPosition.XCoordinate);
+            Assert.IsNotNull(_sut.FoodPosition.YCoordinate);
         }
 
-        [TestCase(-20)]
-        public void AssertFoodThrowsException(int maxLimit)
+        [Test]
+        public void AssertFoodThrowsException()
         {
-            Assert.That(() => _sut.NewFood(maxLimit),
+            _sut = new Src.Model.Food(new RulesFactoryStub());
+
+            Assert.That(() => _sut.NewFood(),
             Throws.TypeOf<ArgumentOutOfRangeException>());
         }
-    }
 
-    class FoodStub : Src.Model.Food
-    {
-        public FoodStub() : base(new Src.Model.rules.RulesFactory())
+        internal class RulesFactoryStub : Src.Model.rules.RulesFactory, Src.Model.rules.IRulesFactory
         {
+            public new Src.Model.rules.ISnakeRules GetGameRules()
+            {
+                return new SnakeRulesStub();
+            }
         }
-        public void NewFood(int maxLimit)
+        internal class SnakeRulesStub : Src.Model.rules.SnakeRules, Src.Model.rules.ISnakeRules
         {
-            FoodPosition = GenerateRandomPosition(maxLimit);
+            public new int GetArenaLimit()
+            {
+                return -20;
+            }
         }
     }
 }

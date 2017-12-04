@@ -7,12 +7,10 @@ namespace Snake_Game.Tests.ModelTests
 {
     [TestFixture]
     [Category("Model")]
-    class GameTest
+    class GameTest : TestBase<Src.Model.Game>
     {
-        private Src.Model.Game _sut;
-
         [SetUp]
-        public void Init()
+        public override void Init()
         {
             _sut = new Src.Model.Game();
             _sut.NewGame();
@@ -54,7 +52,7 @@ namespace Snake_Game.Tests.ModelTests
         [Test]
         public void AssertSnakeGrowsWhenFed()
         {
-            SetSnakeHeadWhereFoodIs(new SnakeInstanceStub());
+            SetSnakeHeadWhereFoodIs(new SnakeStub());
             _sut.FeedSnake();
             int result = _sut.Snake.Body.Count;
 
@@ -68,7 +66,7 @@ namespace Snake_Game.Tests.ModelTests
         [Test]
         public void AssertFoodSpawnsOnNewLocationWhenEaten()
         {
-            SetSnakeHeadWhereFoodIs(new SnakeInstanceStub());
+            SetSnakeHeadWhereFoodIs(new SnakeStub());
             Src.Model.Position expected = _sut.Food.FoodPosition;
             _sut.FeedSnake();
 
@@ -78,26 +76,32 @@ namespace Snake_Game.Tests.ModelTests
             Assert.False(expected.IsPositionEqualTo(result));
         }
 
-        private void SetSnakeHeadWhereFoodIs(SnakeInstanceStub snakeStub)
+        private void SetSnakeHeadWhereFoodIs(SnakeStub snakeStub)
         {
             _sut = new GameStub(snakeStub);
             _sut.NewGame();
             snakeStub.SetHead(_sut.Food.FoodPosition.XCoordinate, _sut.Food.FoodPosition.YCoordinate);
         }
-    }
 
-    class GameStub : Src.Model.Game
-    {
-        public GameStub(Src.Model.Snake snake)
+        internal class GameStub : Src.Model.Game
         {
-            Snake = snake;
+            public GameStub(Src.Model.Snake snake)
+            {
+                Snake = snake;
+            }
         }
-    }
 
-    class SnakeInstanceStub : SnakeStub
-    {
-        public SnakeInstanceStub() : base(new Src.Model.rules.RulesFactory())
+        internal class SnakeStub : Src.Model.Snake
         {
+            public SnakeStub() : base(new Src.Model.rules.RulesFactory())
+            {
+            }
+
+            public void SetHead(int x, int y)
+            {
+                MoveLastTail();
+                Body.Add(new Src.Model.Position(x, y));
+            }
         }
     }
 }

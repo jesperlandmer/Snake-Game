@@ -8,13 +8,12 @@ namespace Snake_Game.Tests.ViewTests
 {
     [TestFixture]
     [Category("View")]
-    class ViewTest
+    class ViewTest : TestBase<Src.View.MasterView>
     {
-        private Src.View.MasterView _sut;
         private Mock<StringWriter> _mockOutput;
 
         [SetUp]
-        public void Init()
+        public override void Init()
         {
             _sut = new Src.View.MasterView();
             _mockOutput = new Mock<StringWriter>();
@@ -22,7 +21,7 @@ namespace Snake_Game.Tests.ViewTests
         }
 
         [TearDown]
-        public void Dispose()
+        public override void Dispose()
         {
             var standardOutput = new StreamWriter(Console.OpenStandardOutput());
             System.Console.SetOut(standardOutput);
