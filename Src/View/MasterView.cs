@@ -21,6 +21,23 @@ namespace Snake_Game.Src.View
             return _console.GetPressedArrow();
         }
 
+        public void WriteSnake(Model.Snake m_snake)
+        {
+            Console.Clear();
+            foreach (Model.Position p in m_snake.Body)
+            {
+                Console.SetCursorPosition(p.XCoordinate, p.YCoordinate);
+
+                if (p != m_snake.GetHead())
+                {
+                    System.Console.Write("*");
+                }
+                else
+                {
+                    System.Console.Write("⊙");
+                }
+            }
+        }
         public void WriteArena(int m_limit)
         {
             WriteTop(m_limit);
@@ -51,23 +68,6 @@ namespace Snake_Game.Src.View
             for (int columnIndex = 0; columnIndex < lim; columnIndex++)
             {
                 Console.Out.Write("#");
-            }
-        }
-
-        public void WriteSnake(Model.Snake m_snake)
-        {
-            foreach (Model.Position p in m_snake.Body)
-            {
-                Console.SetCursorPosition(p.XCoordinate, p.YCoordinate);
-
-                if (p != m_snake.GetHead())
-                {
-                    System.Console.Write("*");
-                }
-                else
-                {
-                    System.Console.Write("⊙");
-                }
             }
         }
         public void WriteFood(Model.Food m_food)
