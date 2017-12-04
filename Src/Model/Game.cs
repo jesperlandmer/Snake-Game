@@ -25,7 +25,7 @@ namespace Snake_Game.Src.Model
         }
         public int GetArenaLimits()
         {
-            throw new NotImplementedException();
+            return _rules.GetGameRules().GetArenaLimit();
         }
         public void SetDirection(Direction m_dir)
         {
