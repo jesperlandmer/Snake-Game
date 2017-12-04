@@ -52,12 +52,19 @@ namespace Snake_Game.Tests.ViewTests
             _mockOutput.Verify(mo => mo.Write(It.Is<string>(Out => Out == "#")),
             Times.Exactly(expected));
         }
-
         [TestCase(20)]
         public void AssertArenaWritesSideWalls(int arenaLimits)
         {
             _sut.WriteSides(arenaLimits);
             int expected = arenaLimits * 2 - 4; // minus 4 because removes corners
+            _mockOutput.Verify(mo => mo.Write(It.Is<string>(Out => Out == "#")),
+            Times.Exactly(expected));
+        }
+        [TestCase(30)]
+        public void AssertArenaWritesBottomWall(int arenaLimits)
+        {
+            _sut.WriteTop(arenaLimits);
+            int expected = arenaLimits;
             _mockOutput.Verify(mo => mo.Write(It.Is<string>(Out => Out == "#")),
             Times.Exactly(expected));
         }
