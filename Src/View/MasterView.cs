@@ -80,12 +80,13 @@ namespace Snake_Game.Src.View
         }
         public void WriteStats(int m_score)
         {
-            System.Console.Write("\nScore: {0} p", m_score);
+            System.Console.Write("\n");
+            System.Console.Write("Score: {0} p", m_score);
         }
         public void WriteGameOver()
         {
-            System.Console.Write(" ");
-            System.Console.Write("\nGame Over\n");
+            System.Console.Write("\n");
+            System.Console.Write("Game Over");
         }
     }
 }

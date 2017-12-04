@@ -102,7 +102,9 @@ namespace Snake_Game.Tests.ViewTests
         {
             _sut.WriteStats(score);
 
-            _mockOutput.Verify(mo => mo.Write(It.Is<string>(Out => Out == "\nScore: " + score + " p")),
+            _mockOutput.Verify(mo => mo.Write(It.Is<string>(Out => Out == "\n")),
+            Times.Once());
+            _mockOutput.Verify(mo => mo.Write(It.Is<string>(Out => Out == "Score: " + score + " p")),
             Times.Once());
         }
         [Test]
@@ -110,9 +112,9 @@ namespace Snake_Game.Tests.ViewTests
         {
             _sut.WriteGameOver();
 
-            _mockOutput.Verify(mo => mo.Write(It.Is<string>(Out => Out == " ")),
+            _mockOutput.Verify(mo => mo.Write(It.Is<string>(Out => Out == "\n")),
             Times.Once());
-            _mockOutput.Verify(mo => mo.Write(It.Is<string>(Out => Out == "\nGame Over\n")),
+            _mockOutput.Verify(mo => mo.Write(It.Is<string>(Out => Out == "Game Over")),
             Times.Once());
         }
     }
