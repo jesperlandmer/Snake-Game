@@ -24,6 +24,7 @@ namespace Snake_Game.Src.View
         public void WriteArena(int m_limit)
         {
             WriteTop(m_limit);
+            WriteSides(m_limit);
         }
         public void WriteTop(int lim)
         {
@@ -42,6 +43,14 @@ namespace Snake_Game.Src.View
 
                 Console.SetCursorPosition(lim - 1, rowIndex);
                 System.Console.Write("#");
+            }
+        }
+        public void WriteBottom(int lim)
+        {
+            Console.SetCursorPosition(0, lim - 1);
+            for (int columnIndex = 0; columnIndex < lim; columnIndex++)
+            {
+                Console.Out.Write("#");
             }
         }
 
