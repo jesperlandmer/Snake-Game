@@ -34,7 +34,7 @@ namespace Snake_Game.Tests.ModelTests
         {
             var RulesFactory = new Src.Model.rules.RulesFactory();
             int expected = RulesFactory.GetGameRules().GetSpeedLimit();
-            int result = _sut.GetGameSpeed();
+            int result = _sut.Speed;
 
             Assert.AreEqual(expected, result);
         }

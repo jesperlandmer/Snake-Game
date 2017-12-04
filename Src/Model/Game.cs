@@ -24,11 +24,7 @@ namespace Snake_Game.Src.Model
             Snake.NewGame();
             Food.NewFood();
             Score = 0;
-        }
-        public int GetGameSpeed()
-        {
-            Speed = _rules.GetGameRules().GetArenaLimit();
-            return Speed;
+            Speed = _rules.GetGameRules().GetSpeedLimit();
         }
         public int GetArenaLimits()
         {
@@ -54,7 +50,7 @@ namespace Snake_Game.Src.Model
         }
         private void IncreaseSpeed()
         {
-            throw new NotImplementedException();
+            Speed = Speed + _rules.GetGameRules().GetSpeedIncrease();
         }
         private bool IsSnakeFed()
         {
