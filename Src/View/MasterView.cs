@@ -42,6 +42,7 @@ namespace Snake_Game.Src.View
         {
             WriteTop(m_limit);
             WriteSides(m_limit);
+            WriteBottom(m_limit);
         }
         public void WriteTop(int lim)
         {
@@ -77,11 +78,14 @@ namespace Snake_Game.Src.View
             Console.SetCursorPosition(p.XCoordinate, p.YCoordinate);
             System.Console.Write("◕");
         }
-        public void WriteGameOver(int m_score)
+        public void WriteStats(int m_score)
+        {
+            throw new NotImplementedException();
+        }
+        public void WriteGameOver()
         {
             System.Console.Write(" ");
             System.Console.Write("\nGame Over\n");
-            System.Console.Write("Score: {0} p", m_score);
         }
     }
 }

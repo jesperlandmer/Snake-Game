@@ -98,15 +98,21 @@ namespace Snake_Game.Tests.ViewTests
         }
 
         [TestCase(2)]
-        public void AssertViewWritesGameOver(int score)
+        public void AssertViewWritesPlayerStats(int score)
         {
-            _sut.WriteGameOver(score);
+            _sut.WriteStats(score);
+
+            _mockOutput.Verify(mo => mo.Write(It.Is<string>(Out => Out == "Score: " + score + " p")),
+            Times.Once());
+        }
+        [Test]
+        public void AssertViewWritesGameOver()
+        {
+            _sut.WriteGameOver();
 
             _mockOutput.Verify(mo => mo.Write(It.Is<string>(Out => Out == " ")),
             Times.Once());
             _mockOutput.Verify(mo => mo.Write(It.Is<string>(Out => Out == "\nGame Over\n")),
-            Times.Once());
-            _mockOutput.Verify(mo => mo.Write(It.Is<string>(Out => Out == "Score: " + score + " p")),
             Times.Once());
         }
     }
