@@ -17,11 +17,15 @@ namespace Snake_Game.Src.Model
             Food = new Food(_rules);
         }
 
-        public virtual void NewGame()
+        public void NewGame()
         {
             Snake.NewGame();
             Food.NewFood();
             Score = 0;
+        }
+        public int GetArenaLimits()
+        {
+            throw new NotImplementedException();
         }
         public void SetDirection(Direction m_dir)
         {

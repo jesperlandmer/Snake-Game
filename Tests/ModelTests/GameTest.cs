@@ -30,6 +30,17 @@ namespace Snake_Game.Tests.ModelTests
             Assert.IsNotNull(_sut.Food.FoodPosition);
         }
 
+
+        [Test]
+        public void AssertGetArenaLimitsReturnLimits()
+        {
+            var RulesFactory = new Src.Model.rules.RulesFactory();
+            int expected = RulesFactory.GetGameRules().GetArenaLimit();
+            int result = _sut.GetArenaLimits();
+
+            Assert.AreEqual(expected, result);
+        }
+
         [TestCase(Src.Model.Direction.Up)]
         [TestCase(Src.Model.Direction.Down)]
         [TestCase(Src.Model.Direction.Left)]
