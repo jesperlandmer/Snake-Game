@@ -63,7 +63,7 @@ namespace Snake_Game.Tests.ViewTests
         [TestCase(30)]
         public void AssertArenaWritesBottomWall(int arenaLimits)
         {
-            _sut.WriteTop(arenaLimits);
+            _sut.WriteBottom(arenaLimits);
             int expected = arenaLimits;
             _mockOutput.Verify(mo => mo.Write(It.Is<string>(Out => Out == "#")),
             Times.Exactly(expected));
