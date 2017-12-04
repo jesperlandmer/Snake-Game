@@ -85,6 +85,21 @@ namespace Snake_Game.Tests.ModelTests
             Assert.False(expected.IsPositionEqualTo(result));
         }
 
+        [Test]
+        public void AssertGameSpeedIncreaseOnSnakeFed()
+        {
+            SetSnakeHeadWhereFoodIs(new SnakeStub());
+            _sut.FeedSnake();
+            int result = _sut.Speed;
+
+            var RulesFactory = new Src.Model.rules.RulesFactory();
+            int initSpeed = RulesFactory.GetGameRules().GetSpeedLimit();
+            int speedIncrease = RulesFactory.GetGameRules().GetSpeedIncrease();
+            int expected = initSpeed + speedIncrease;
+
+            Assert.AreEqual(expected, result);
+        }
+
         private void SetSnakeHeadWhereFoodIs(SnakeStub snakeStub)
         {
             _sut = new GameStub(snakeStub);

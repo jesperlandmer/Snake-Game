@@ -11,8 +11,8 @@ namespace Snake_Game.Src.Model
         public Snake Snake { get; protected set; }
         public Food Food { get; protected set; }
         public int Score { get; protected set; }
-        public int Speed{ get; protected set; }
-        
+        public int Speed { get; protected set; }
+
         public Game()
         {
             Snake = new Snake(_rules);
@@ -27,7 +27,8 @@ namespace Snake_Game.Src.Model
         }
         public int GetGameSpeed()
         {
-            throw new NotImplementedException();
+            Speed = _rules.GetGameRules().GetArenaLimit();
+            return Speed;
         }
         public int GetArenaLimits()
         {
@@ -45,15 +46,21 @@ namespace Snake_Game.Src.Model
         {
             if (IsSnakeFed())
             {
-                Food.NewFood();
                 Snake.Grow();
+                Food.NewFood();
+                IncreaseSpeed();
                 Score++;
             }
+        }
+        private void IncreaseSpeed()
+        {
+            throw new NotImplementedException();
         }
         private bool IsSnakeFed()
         {
             return Snake.GetHead().IsPositionEqualTo(Food.FoodPosition);
         }
+
         public bool IsGameOver()
         {
             return Snake.Dead();
