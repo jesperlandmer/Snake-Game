@@ -70,7 +70,7 @@ namespace Snake_Game.Src.Model
 
             Body.Add(new Position(newX, newY));
         }
-        public void MoveLastTail()
+        protected void MoveLastTail()
         {
             Body.Remove(Body.First());
         }

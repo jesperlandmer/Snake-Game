@@ -53,6 +53,17 @@ namespace Snake_Game.Tests.ModelTests
             Assert.Equal(result, expected);
         }
 
+        [Theory]
+        [InlineData(Src.Model.Direction.Up)]
+        [InlineData(Src.Model.Direction.Down)]
+        [InlineData(Src.Model.Direction.Left)]
+        [InlineData(Src.Model.Direction.Right)]
+        public void AssertSnakeUpdatesDirection(Src.Model.Direction dir)
+        {
+            _sut.UpdateDirection(dir);
+            Assert.Equal(dir, _sut.Direction);
+        }
+
         [Fact]
         public void AssertSnakeMoves()
         {
@@ -61,6 +72,34 @@ namespace Snake_Game.Tests.ModelTests
             var expected = _sut.Body.First();
 
             Assert.NotEqual(result, expected);
+        }
+        [Theory]
+        [InlineData(Src.Model.Direction.Up)]
+        [InlineData(Src.Model.Direction.Down)]
+        [InlineData(Src.Model.Direction.Right)]
+        [InlineData(Src.Model.Direction.Left)]
+        public void AssertSnakeMovesInRightDirection(Src.Model.Direction dir)
+        {
+            var expected = _sut.GetHead();
+            _sut.UpdateDirection(dir);
+            _sut.UpdatePosition();
+            var result = _sut.GetHead();
+
+            switch (dir)
+            {
+                case Src.Model.Direction.Up:
+                    Assert.True(expected.YCoordinate > result.YCoordinate);
+                    break;
+                case Src.Model.Direction.Down:
+                    Assert.True(expected.YCoordinate < result.YCoordinate);
+                    break;
+                case Src.Model.Direction.Right:
+                    Assert.True(expected.XCoordinate < result.XCoordinate);
+                    break;
+                case Src.Model.Direction.Left:
+                    Assert.True(expected.XCoordinate > result.XCoordinate);
+                    break;
+            }
         }
 
         [Fact]
