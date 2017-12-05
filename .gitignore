@@ -13,6 +13,10 @@ project.lock.json
 *.userosscache
 *.sln.docstates
 
+# Coverage results
+coverage-hits.txt
+coverage.json
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
