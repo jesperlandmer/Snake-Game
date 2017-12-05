@@ -1,7 +1,7 @@
 
 namespace Snake_Game.Src.Model.rules
 {
-    interface ISnakeRules
+    public interface ISnakeRules
     {
         int GetSpeedLimit();
         int GetSpeedIncrease();

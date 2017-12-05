@@ -5,7 +5,7 @@ using System.Timers;
 
 namespace Snake_Game.Src.Controller
 {
-    class PlaySnake
+    public class PlaySnake
     {
         private static System.Timers.Timer a_Timer;
 

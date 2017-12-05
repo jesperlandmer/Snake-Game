@@ -1,28 +1,25 @@
 using System;
 using System.Linq;
 using Moq;
-using NUnit.Framework;
+using Xunit;
 
 namespace Snake_Game.Tests.ModelTests
 {
-    [TestFixture]
-    [Category("Model")]
-    class SnakeTest : TestBase<Src.Model.Snake>
+    public class SnakeTest : TestBase<Src.Model.Snake>
     {
-        [SetUp]
-        public override void Init()
+        public SnakeTest()
         {
             _sut = new Src.Model.Snake(new RulesFactoryStub());
             _sut.NewGame();
         }
 
-        [Test]
+        [Fact]
         public void AssertInitialSnakeIsCreated()
         {
             Assert.True(_sut.Body.Count > 0);
         }
 
-        [Test]
+        [Fact]
         public void AssertInitialSnakeIsCreatedFromRule()
         {
             var mockFactory = new Mock<Src.Model.rules.IRulesFactory>();
@@ -35,57 +32,56 @@ namespace Snake_Game.Tests.ModelTests
             mockStrategy.Verify(s => s.GetInitSnake(), Times.Once());
         }
 
-        [Test]
+        [Fact]
         public void AssertSnakeHasDirection()
         {
-            Assert.IsInstanceOf<Src.Model.Direction>(_sut.Direction);
+            Assert.IsType<Src.Model.Direction>(_sut.Direction);
         }
 
-        [Test]
+        [Fact]
         public void AssertSnakeHasBody()
         {
-            CollectionAssert.AllItemsAreNotNull(_sut.Body);
-            CollectionAssert.IsNotEmpty(_sut.Body);
+            Assert.NotEmpty(_sut.Body);
         }
 
-        [Test]
+        [Fact]
         public void AssertSnakeHeadIsHead()
         {
             var result = _sut.GetHead();
             var expected = _sut.Body.Last();
 
-            Assert.AreEqual(result, expected);
+            Assert.Equal(result, expected);
         }
 
-        [Test]
+        [Fact]
         public void AssertSnakeMoves()
         {
             var result = _sut.Body.First();
             _sut.UpdatePosition();
             var expected = _sut.Body.First();
 
-            Assert.AreNotEqual(result, expected);
+            Assert.NotEqual(result, expected);
         }
 
-        [Test]
+        [Fact]
         public void AssertSnakeGrows()
         {
             var result = _sut.Body.Count;
             _sut.Grow();
             var expected = _sut.Body.Count;
 
-            // Assert.Greater(x, y) = x is greater than y
-            Assert.Greater(expected, result);
+            Assert.True(expected > result);
         }
 
-        [Test]
+        [Fact]
         public void AssertSnakeCanDie()
         {
             Assert.True(_sut.Dead());
         }
 
-        [TestCase(0, 10)]
-        [TestCase(10, 0)]
+        [Theory]
+        [InlineData(0, 10)]
+        [InlineData(10, 0)]
         public void AssertSnakeDiesFromHittingWall(int x, int y)
         {
             SnakeStub snakeStub = new SnakeStub(new Src.Model.rules.RulesFactory());

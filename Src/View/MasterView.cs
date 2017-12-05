@@ -3,7 +3,7 @@ using System;
 
 namespace Snake_Game.Src.View
 {
-    class MasterView
+    public class MasterView
     {
         private IConsoleView _console;
 

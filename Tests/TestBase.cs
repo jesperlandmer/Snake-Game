@@ -1,15 +1,11 @@
 using System;
-using NUnit.Framework;
+using Xunit;
 
 namespace Snake_Game.Tests
 {
-    abstract class TestBase<T>
+    public abstract class TestBase<T> : IDisposable
     {
         protected T _sut;
-
-        public virtual void Init()
-        {
-        }
         public virtual void Dispose()
         {
         }

@@ -1,32 +1,30 @@
 using System;
-using NUnit.Framework;
+using Xunit;
 
 namespace Snake_Game.Tests.ModelTests
 {
-    [TestFixture]
-    [Category("Model")]
-    class PositionTest : TestBase<Src.Model.Position>
+    public class PositionTest : TestBase<Src.Model.Position>
     {
-        [SetUp]
-        public override void Init()
+        public PositionTest()
         {
-            _sut = new Src.Model.Position(0,0);
+            _sut = new Src.Model.Position(0, 0);
         }
 
-        [TestCase(10, 8)]
+        [Theory]
+        [InlineData(10, 8)]
         public void AssertPositionReturnsCoordinates(int x, int y)
         {
             _sut = new Src.Model.Position(x, y);
 
-            Assert.AreEqual(_sut.XCoordinate, x);
-            Assert.AreEqual(_sut.YCoordinate, y);
+            Assert.Equal(_sut.XCoordinate, x);
+            Assert.Equal(_sut.YCoordinate, y);
         }
 
-        [TestCase(-6, -3)]
+        [Theory]
+        [InlineData(-6, -3)]
         public void AssertPositionThrowsException(int x, int y)
         {
-            Assert.That(() => new Src.Model.Position(x, y),
-            Throws.TypeOf<ArgumentOutOfRangeException>());
+            Assert.Throws<ArgumentOutOfRangeException>(() => new Src.Model.Position(x, y));
         }
     }
 }

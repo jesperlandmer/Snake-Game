@@ -3,7 +3,7 @@ using System;
 
 namespace Snake_Game.Src.Model.rules
 {
-    class RulesFactory : IRulesFactory
+    public class RulesFactory : IRulesFactory
     {
         public virtual ISnakeRules GetGameRules()
         {

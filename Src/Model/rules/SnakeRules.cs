@@ -3,7 +3,7 @@ using System;
 
 namespace Snake_Game.Src.Model.rules
 {
-    class SnakeRules : ISnakeRules
+    public class SnakeRules : ISnakeRules
     {
         private int _gameSpeedLimit = 250;
         private int _gameSpeedIncrease = 10;

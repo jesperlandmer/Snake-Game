@@ -1,35 +1,31 @@
 using System;
-using NUnit.Framework;
+using Xunit;
 
 namespace Snake_Game.Tests.ModelTests
 {
-    [TestFixture]
-    [Category("Model")]
-    class FoodTest : TestBase<Src.Model.Food>
+        public class FoodTest : TestBase<Src.Model.Food>
     {
-        [SetUp]
-        public override void Init()
+        public FoodTest()
         {
             var RulesFactory = new Src.Model.rules.RulesFactory();
             _sut = new Src.Model.Food(RulesFactory);
         }
 
-        [TestCase(20)]
+        [Theory]
+        [InlineData(20)]
         public void AssertFoodSetsPosition(int maxLimit)
         {
             _sut.NewFood();
-            Assert.IsInstanceOf<Src.Model.Position>(_sut.FoodPosition);
-            Assert.IsNotNull(_sut.FoodPosition.XCoordinate);
-            Assert.IsNotNull(_sut.FoodPosition.YCoordinate);
+            Assert.IsType<Src.Model.Position>(_sut.FoodPosition);
+            Assert.NotNull(_sut.FoodPosition.XCoordinate);
+            Assert.NotNull(_sut.FoodPosition.YCoordinate);
         }
 
-        [Test]
+        [Fact]
         public void AssertFoodThrowsException()
         {
             _sut = new Src.Model.Food(new RulesFactoryStub());
-
-            Assert.That(() => _sut.NewFood(),
-            Throws.TypeOf<ArgumentOutOfRangeException>());
+            Assert.Throws<ArgumentOutOfRangeException>(() => _sut.NewFood());
         }
 
         internal class RulesFactoryStub : Src.Model.rules.RulesFactory, Src.Model.rules.IRulesFactory

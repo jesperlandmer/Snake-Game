@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Snake_Game.Src.Model.rules
 {
-    interface ISnakeGameStrategy
+    public interface ISnakeGameStrategy
     {
         List<Position> GetInitSnake();
     }

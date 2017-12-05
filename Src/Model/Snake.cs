@@ -12,7 +12,7 @@ namespace Snake_Game.Src.Model
         Right,
         Left
     }
-    class Snake
+    public class Snake
     {
         protected rules.ISnakeGameStrategy _initRules;
         protected rules.ISnakeRules _snakeRules;

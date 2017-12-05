@@ -2,35 +2,30 @@ using System;
 using System.IO;
 using System.Text;
 using Moq;
-using NUnit.Framework;
+using Xunit;
 
 namespace Snake_Game.Tests.ViewTests
 {
-    [TestFixture]
-    [Category("View")]
-    class ViewTest : TestBase<Src.View.MasterView>
+    public class ViewTest : TestBase<Src.View.MasterView>
     {
         private Mock<StringWriter> _mockOutput;
-
-        [SetUp]
-        public override void Init()
+        public ViewTest()
         {
             _sut = new Src.View.MasterView();
             _mockOutput = new Mock<StringWriter>();
             System.Console.SetOut(_mockOutput.Object);
         }
-
-        [TearDown]
         public override void Dispose()
         {
             var standardOutput = new StreamWriter(Console.OpenStandardOutput());
             System.Console.SetOut(standardOutput);
         }
 
-        [TestCase(ConsoleKey.UpArrow)]
-        [TestCase(ConsoleKey.DownArrow)]
-        [TestCase(ConsoleKey.LeftArrow)]
-        [TestCase(ConsoleKey.RightArrow)]
+        [Theory]
+        [InlineData(ConsoleKey.UpArrow)]
+        [InlineData(ConsoleKey.DownArrow)]
+        [InlineData(ConsoleKey.LeftArrow)]
+        [InlineData(ConsoleKey.RightArrow)]
         public void AssertViewGetsPressedKey(ConsoleKey key)
         {
             var mockUserInput = new Mock<Src.View.IConsoleView>();
@@ -43,7 +38,8 @@ namespace Snake_Game.Tests.ViewTests
             Times.Once());
         }
 
-        [TestCase(30)]
+        [Theory]
+        [InlineData(30)]
         public void AssertArenaWritesTopWall(int arenaLimits)
         {
             _sut.WriteTop(arenaLimits);
@@ -51,7 +47,8 @@ namespace Snake_Game.Tests.ViewTests
             _mockOutput.Verify(mo => mo.Write(It.Is<string>(Out => Out == "#")),
             Times.Exactly(expected));
         }
-        [TestCase(20)]
+        [Theory]
+        [InlineData(20)]
         public void AssertArenaWritesSideWalls(int arenaLimits)
         {
             _sut.WriteSides(arenaLimits);
@@ -59,7 +56,8 @@ namespace Snake_Game.Tests.ViewTests
             _mockOutput.Verify(mo => mo.Write(It.Is<string>(Out => Out == "#")),
             Times.Exactly(expected));
         }
-        [TestCase(30)]
+        [Theory]
+        [InlineData(30)]
         public void AssertArenaWritesBottomWall(int arenaLimits)
         {
             _sut.WriteBottom(arenaLimits);
@@ -68,7 +66,7 @@ namespace Snake_Game.Tests.ViewTests
             Times.Exactly(expected));
         }
 
-        [Test]
+        [Fact]
         public void AssertViewWritesSnake()
         {
             var Game = new Src.Model.Game();
@@ -84,7 +82,7 @@ namespace Snake_Game.Tests.ViewTests
             Times.Exactly(expectedBody));
         }
 
-        [Test]
+        [Fact]
         public void AssertViewWritesFood()
         {
             var Game = new Src.Model.Game();
@@ -97,7 +95,8 @@ namespace Snake_Game.Tests.ViewTests
             Times.Exactly(expected));
         }
 
-        [TestCase(2)]
+        [Theory]
+        [InlineData(2)]
         public void AssertViewWritesPlayerStats(int score)
         {
             _sut.WriteStats(score);
@@ -107,7 +106,7 @@ namespace Snake_Game.Tests.ViewTests
             _mockOutput.Verify(mo => mo.Write(It.Is<string>(Out => Out == "Score: " + score + " p")),
             Times.Once());
         }
-        [Test]
+        [Fact]
         public void AssertViewWritesGameOver()
         {
             _sut.WriteGameOver();

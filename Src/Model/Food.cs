@@ -3,7 +3,7 @@ using System;
 
 namespace Snake_Game.Src.Model
 {
-    class Food
+    public class Food
     {
         private rules.ISnakeRules _gameRules;
         private Random _random = new Random();

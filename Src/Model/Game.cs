@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Snake_Game.Src.Model
 {
-    class Game
+    public class Game
     {
         private rules.IRulesFactory _rules = new rules.RulesFactory();
         public Snake Snake { get; protected set; }

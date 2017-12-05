@@ -1,64 +1,62 @@
 using System;
 using System.Linq;
 using Moq;
-using NUnit.Framework;
+using Xunit;
 
 namespace Snake_Game.Tests.ModelTests
 {
-    [TestFixture]
-    [Category("Model")]
-    class GameTest : TestBase<Src.Model.Game>
+    public class GameTest : TestBase<Src.Model.Game>
     {
-        [SetUp]
-        public override void Init()
+        public GameTest()
         {
             _sut = new Src.Model.Game();
             _sut.NewGame();
         }
 
-        [Test]
+        [Fact]
         public void AssertSnakeIsCreatedOnNewGame()
         {
-            Assert.IsNotNull(_sut.Snake.Body);
+            Assert.NotNull(_sut.Snake.Body);
         }
 
-        [Test]
+        [Fact]
         public void AssertFoodIsCreatedOnNewGame()
         {
-            Assert.IsNotNull(_sut.Food.FoodPosition);
+            Assert.NotNull(_sut.Food.FoodPosition);
         }
 
 
-        [Test]
+        [Fact]
         public void AssertGetGameSpeedReturnsSpeed()
         {
             var RulesFactory = new Src.Model.rules.RulesFactory();
             int expected = RulesFactory.GetGameRules().GetSpeedLimit();
             int result = _sut.Speed;
 
-            Assert.AreEqual(expected, result);
+            Assert.Equal(expected, result);
         }
-        [Test]
+        [Fact]
         public void AssertGetArenaLimitsReturnLimits()
         {
             var RulesFactory = new Src.Model.rules.RulesFactory();
             int expected = RulesFactory.GetGameRules().GetArenaLimit();
             int result = _sut.GetArenaLimits();
 
-            Assert.AreEqual(expected, result);
+            Assert.Equal(expected, result);
         }
 
-        [TestCase(Src.Model.Direction.Up)]
-        [TestCase(Src.Model.Direction.Down)]
-        [TestCase(Src.Model.Direction.Left)]
-        [TestCase(Src.Model.Direction.Right)]
+        [Theory]
+        [InlineData(Src.Model.Direction.Up)]
+        [InlineData(Src.Model.Direction.Down)]
+        [InlineData(Src.Model.Direction.Left)]
+        [InlineData(Src.Model.Direction.Right)]
         public void AssertSnakeDirectionIsSet(Src.Model.Direction dir)
         {
             _sut.SetDirection(dir);
             Assert.True(_sut.Snake.Direction == dir);
         }
 
-        [Test]
+        [Fact]
         public void AssertSnakeGrowsWhenFed()
         {
             SetSnakeHeadWhereFoodIs(new SnakeStub());
@@ -69,10 +67,10 @@ namespace Snake_Game.Tests.ModelTests
             game.NewGame();
             int expected = game.Snake.Body.Count + 1;
 
-            Assert.AreEqual(expected, result);
+            Assert.Equal(expected, result);
         }
 
-        [Test]
+        [Fact]
         public void AssertFoodSpawnsOnNewLocationWhenEaten()
         {
             SetSnakeHeadWhereFoodIs(new SnakeStub());
@@ -85,7 +83,7 @@ namespace Snake_Game.Tests.ModelTests
             Assert.False(expected.IsPositionEqualTo(result));
         }
 
-        [Test]
+        [Fact]
         public void AssertGameSpeedIncreaseOnSnakeFed()
         {
             SetSnakeHeadWhereFoodIs(new SnakeStub());
@@ -97,7 +95,7 @@ namespace Snake_Game.Tests.ModelTests
             int speedIncrease = RulesFactory.GetGameRules().GetSpeedIncrease();
             int expected = initSpeed + speedIncrease;
 
-            Assert.AreEqual(expected, result);
+            Assert.Equal(expected, result);
         }
 
         private void SetSnakeHeadWhereFoodIs(SnakeStub snakeStub)

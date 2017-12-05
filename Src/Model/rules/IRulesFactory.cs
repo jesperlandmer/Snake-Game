@@ -3,7 +3,7 @@ using System;
 
 namespace Snake_Game.Src.Model.rules
 {
-    interface IRulesFactory
+    public interface IRulesFactory
     {
         ISnakeRules GetGameRules();
         ISnakeGameStrategy GetSnakeGameStrategy();

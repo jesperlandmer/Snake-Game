@@ -3,7 +3,7 @@ using System;
 
 namespace Snake_Game.Src.View
 {
-    interface IConsoleView
+    public interface IConsoleView
     {
         ConsoleKey GetPressedArrow();
     }
