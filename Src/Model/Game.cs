@@ -52,11 +52,11 @@ namespace Snake_Game.Src.Model
         {
             Speed = Speed + _rules.GetGameRules().GetSpeedIncrease();
         }
+        
         private bool IsSnakeFed()
         {
             return Snake.GetHead().IsPositionEqualTo(Food.FoodPosition);
         }
-
         public bool IsGameOver()
         {
             return Snake.Dead();

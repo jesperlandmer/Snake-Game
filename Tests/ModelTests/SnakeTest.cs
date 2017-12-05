@@ -9,7 +9,7 @@ namespace Snake_Game.Tests.ModelTests
     {
         public SnakeTest()
         {
-            _sut = new Src.Model.Snake(new RulesFactoryStub());
+            _sut = new Src.Model.Snake(new Src.Model.rules.RulesFactory());
             _sut.NewGame();
         }
 
@@ -74,8 +74,15 @@ namespace Snake_Game.Tests.ModelTests
         }
 
         [Fact]
+        public void AssertSnakeIsNotDead()
+        {
+            Assert.False(_sut.Dead());
+        }
+
+        [Fact]
         public void AssertSnakeCanDie()
         {
+            _sut = new Src.Model.Snake(new RulesFactoryStub());
             Assert.True(_sut.Dead());
         }
 
