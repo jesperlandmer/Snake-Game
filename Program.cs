@@ -6,7 +6,7 @@ namespace Snake_Game
     {
         static void Main(string[] args)
         {
-            Src.View.MasterView v = new Src.View.MasterView();
+            Src.View.IView v = new Src.View.MasterView();
             Src.Model.Game g = new Src.Model.Game();
             g.NewGame();
 

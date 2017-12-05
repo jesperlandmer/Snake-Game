@@ -3,22 +3,11 @@ using System;
 
 namespace Snake_Game.Src.View
 {
-    public class MasterView
+    public class MasterView : IView
     {
-        private IConsoleView _console;
-
-        public MasterView()
-        {
-            _console = new ConsoleView();
-        }
-        public MasterView(IConsoleView v_console)
-        {
-            _console = v_console;
-        }
-
         public ConsoleKey GetChosenDirection()
         {
-            return _console.GetPressedArrow();
+            return Console.ReadKey(false).Key;
         }
 
         public void WriteSnake(Model.Snake m_snake)
@@ -44,7 +33,7 @@ namespace Snake_Game.Src.View
             WriteSides(m_limit);
             WriteBottom(m_limit);
         }
-        public void WriteTop(int lim)
+        private void WriteTop(int lim)
         {
             for (int columnIndex = 0; columnIndex < lim; columnIndex++)
             {
@@ -52,7 +41,7 @@ namespace Snake_Game.Src.View
                 System.Console.Write("#");
             }
         }
-        public void WriteSides(int lim)
+        private void WriteSides(int lim)
         {
             for (int rowIndex = 1; rowIndex < lim - 1; rowIndex++)
             {
@@ -63,7 +52,7 @@ namespace Snake_Game.Src.View
                 System.Console.Write("#");
             }
         }
-        public void WriteBottom(int lim)
+        private void WriteBottom(int lim)
         {
             Console.SetCursorPosition(0, lim - 1);
             for (int columnIndex = 0; columnIndex < lim; columnIndex++)

@@ -9,7 +9,7 @@ namespace Snake_Game.Src.Controller
     {
         private static System.Timers.Timer a_Timer;
 
-        public bool Run(Model.Game m_game, View.MasterView v_view)
+        public bool Run(Model.Game m_game, View.IView v_view)
         {
             DoTimedEvent(m_game, v_view);
             ConsoleKey direction = v_view.GetChosenDirection();
@@ -47,7 +47,7 @@ namespace Snake_Game.Src.Controller
             }
         }
 
-        private void DoTimedEvent(Model.Game m_game, View.MasterView v_view)
+        private void DoTimedEvent(Model.Game m_game, View.IView v_view)
         {
             a_Timer = new System.Timers.Timer(m_game.Speed);
             a_Timer.Elapsed += (source, e) => DoPlayBoard(m_game, v_view);
@@ -55,7 +55,7 @@ namespace Snake_Game.Src.Controller
             a_Timer.Enabled = true;
         }
 
-        private void DoPlayBoard(Model.Game m_game, View.MasterView v_view)
+        private void DoPlayBoard(Model.Game m_game, View.IView v_view)
         {
             m_game.UpdateSnake();
             m_game.FeedSnake();

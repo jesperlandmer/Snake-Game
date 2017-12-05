@@ -23,47 +23,27 @@ namespace Snake_Game.Tests.ViewTests
 
         [Theory]
         [InlineData(ConsoleKey.UpArrow)]
-        [InlineData(ConsoleKey.DownArrow)]
-        [InlineData(ConsoleKey.LeftArrow)]
-        [InlineData(ConsoleKey.RightArrow)]
-        public void AssertViewGetsPressedKey(ConsoleKey key)
+        public void AssertViewReturnsConsoleKey(ConsoleKey testKey)
         {
-            var mockUserInput = new Mock<Src.View.IConsoleView>();
-            mockUserInput.Setup(s => s.GetPressedArrow()).Returns(key);
+            var mockView = new Mock<Src.View.IView>();
 
-            _sut = new Src.View.MasterView(mockUserInput.Object);
-            _sut.GetChosenDirection();
-
-            mockUserInput.Verify(s => s.GetPressedArrow(),
-            Times.Once());
+            mockView.Setup(s => s.GetChosenDirection())
+            .Returns(testKey);
         }
 
         [Theory]
         [InlineData(30)]
-        public void AssertArenaWritesTopWall(int arenaLimits)
+        public void AssertViewWritesArena(int arenaLimits)
         {
-            _sut.WriteTop(arenaLimits);
-            int expected = arenaLimits;
+            _sut.WriteArena(arenaLimits);
+            int TopLength = arenaLimits;
+            int SidesLength = arenaLimits * 2 - 4; // minus 4 because removes corners
+            int BottomLength = arenaLimits;
+            int expectedWallsLength = TopLength + SidesLength + BottomLength;
+
+            // Write All Walls
             _mockOutput.Verify(mo => mo.Write(It.Is<string>(Out => Out == "#")),
-            Times.Exactly(expected));
-        }
-        [Theory]
-        [InlineData(20)]
-        public void AssertArenaWritesSideWalls(int arenaLimits)
-        {
-            _sut.WriteSides(arenaLimits);
-            int expected = arenaLimits * 2 - 4; // minus 4 because removes corners
-            _mockOutput.Verify(mo => mo.Write(It.Is<string>(Out => Out == "#")),
-            Times.Exactly(expected));
-        }
-        [Theory]
-        [InlineData(30)]
-        public void AssertArenaWritesBottomWall(int arenaLimits)
-        {
-            _sut.WriteBottom(arenaLimits);
-            int expected = arenaLimits;
-            _mockOutput.Verify(mo => mo.Write(It.Is<string>(Out => Out == "#")),
-            Times.Exactly(expected));
+            Times.Exactly(expectedWallsLength));
         }
 
         [Fact]
