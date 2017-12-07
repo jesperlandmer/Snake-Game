@@ -20,6 +20,16 @@ namespace Snake_Game.Tests.ModelTests
         }
 
         [Fact]
+        public void AssertSnakeIsUsingRules()
+        {
+            var mockFactory = new Mock<Src.Model.rules.IRulesFactory>();
+            _sut = new Src.Model.Snake(mockFactory.Object);
+
+            mockFactory.Verify(s => s.GetGameRules(), Times.Once());
+            mockFactory.Verify(s => s.GetSnakeGameStrategy(), Times.Once());
+        }
+
+        [Fact]
         public void AssertInitialSnakeIsCreatedFromRule()
         {
             var mockFactory = new Mock<Src.Model.rules.IRulesFactory>();

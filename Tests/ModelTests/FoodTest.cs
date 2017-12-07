@@ -1,14 +1,24 @@
 using System;
+using Moq;
 using Xunit;
 
 namespace Snake_Game.Tests.ModelTests
 {
-        public class FoodTest : TestBase<Src.Model.Food>
+    public class FoodTest : TestBase<Src.Model.Food>
     {
         public FoodTest()
         {
             var RulesFactory = new Src.Model.rules.RulesFactory();
             _sut = new Src.Model.Food(RulesFactory);
+        }
+
+        [Fact]
+        public void AssertFoodIsUsingSnakeRules()
+        {
+            var mockFactory = new Mock<Src.Model.rules.IRulesFactory>();
+            _sut = new Src.Model.Food(mockFactory.Object);
+
+            mockFactory.Verify(s => s.GetGameRules(), Times.Once());
         }
 
         [Theory]
